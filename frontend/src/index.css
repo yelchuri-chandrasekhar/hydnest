@@ -1,0 +1,236 @@
+/* src/index.css */
+:root {
+  --color-primary: #4a90c2;
+  --color-primary-dark: #3a7aa8;
+  --color-primary-light: #eaf4fb;
+  --color-accent: #6fa8c9;
+  --color-text: #2c3e50;
+  --color-text-muted: #6b7b8c;
+  --color-border: #e1ecf3;
+  --color-bg: #f7fbfd;
+  --color-white: #ffffff;
+  --color-success: #4caf7d;
+  --color-error: #d17575;
+  --radius: 10px;
+  --shadow: 0 1px 4px rgba(74, 144, 194, 0.08);
+  --font-main: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-main);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+a {
+  color: var(--color-primary);
+}
+
+h1, h2, h3 {
+  color: var(--color-text);
+  margin-top: 0;
+}
+
+/* Buttons */
+button, .btn {
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover, .btn:hover {
+  background: var(--color-primary-dark);
+}
+
+button.secondary {
+  background: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+button.secondary:hover {
+  background: var(--color-primary-light);
+}
+
+button.danger {
+  background: var(--color-error);
+}
+
+button.danger:hover {
+  background: #a31f1f;
+}
+
+/* Inputs */
+input, textarea, select {
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  padding: 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  width: 100%;
+  background: #fff;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: var(--color-text-muted);
+}
+
+/* Layout helpers */
+.container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.container-narrow {
+  max-width: 450px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.card-link:hover .card {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+
+.text-error {
+  color: var(--color-error);
+  font-size: 0.9rem;
+}
+
+.text-success {
+  color: var(--color-success);
+  font-size: 0.9rem;
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.price {
+  color: var(--color-primary-dark);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.badge-success {
+  background: #e6f4ea;
+  color: var(--color-success);
+}
+
+.badge-muted {
+  background: #f0f0f0;
+  color: var(--color-text-muted);
+}
+
+.flex-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Responsive Navbar */
+.navbar-links-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .navbar-toggle {
+    display: block !important;
+  }
+  .navbar-links-desktop {
+    display: none !important;
+  }
+  .navbar-links-mobile {
+    display: flex !important;
+  }
+}
+
+/* General responsive tweaks */
+@media (max-width: 600px) {
+  .container,
+  .container-narrow {
+    margin: 1rem auto;
+    padding: 0 0.75rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+}
