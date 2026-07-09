@@ -2,9 +2,6 @@
 
 A full-stack rental platform for finding PGs, hostels, flats, and shared rooms in Hyderabad. Built as a real-world project to demonstrate end-to-end full-stack development — from database design to a responsive, role-based UI, backed by a polyglot microservices architecture (Node.js + Java Spring Boot).
 
-## 🔗 Live Demo
-*(Add your deployed link here once hosted)*
-
 ## ✨ Features
 
 ### For Tenants
