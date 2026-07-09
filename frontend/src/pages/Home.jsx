@@ -1,7 +1,7 @@
 // src/pages/Home.jsx
 import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import api from '../services/api';
+import { searchApi } from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 
 function Home() {
@@ -10,7 +10,7 @@ function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get('/properties')
+    searchApi.get('/search/properties')
       .then((res) => setFeatured(res.data.properties.slice(0, 3)))
       .catch(() => setFeatured([]))
       .finally(() => setLoading(false));
@@ -66,7 +66,7 @@ function Home() {
                 <h3>{property.title}</h3>
                 <p className="text-muted">{property.area}, {property.city}</p>
                 <p className="price">₹{property.rent}/month</p>
-                <span className="badge badge-muted">{property.property_type.replace('_', ' ')}</span>
+                <span className="badge badge-muted">{property.propertyType.replace('_', ' ')}</span>
               </div>
             </Link>
           ))}

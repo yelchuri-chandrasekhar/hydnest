@@ -1,7 +1,7 @@
 // src/pages/PropertyList.jsx
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import api from '../services/api';
+import { searchApi } from '../services/api';
 
 function PropertyList() {
   const [properties, setProperties] = useState([]);
@@ -9,9 +9,9 @@ function PropertyList() {
   const [error, setError] = useState('');
   const [filters, setFilters] = useState({
     city: '',
-    property_type: '',
-    min_rent: '',
-    max_rent: '',
+    propertyType: '',
+    minRent: '',
+    maxRent: '',
   });
 
   const fetchProperties = async () => {
@@ -21,7 +21,7 @@ function PropertyList() {
       const params = Object.fromEntries(
         Object.entries(filters).filter(([_, v]) => v !== '')
       );
-      const res = await api.get('/properties', { params });
+      const res = await searchApi.get('/search/properties', { params });
       setProperties(res.data.properties);
     } catch (err) {
       setError('Failed to load properties');
@@ -58,7 +58,7 @@ function PropertyList() {
         </div>
         <div style={{ flex: '1 1 150px' }}>
           <label>Property Type</label>
-          <select name="property_type" value={filters.property_type} onChange={handleFilterChange}>
+          <select name="propertyType" value={filters.propertyType} onChange={handleFilterChange}>
             <option value="">All Types</option>
             <option value="pg">PG</option>
             <option value="hostel">Hostel</option>
@@ -71,11 +71,11 @@ function PropertyList() {
         </div>
         <div style={{ flex: '1 1 120px' }}>
           <label>Min Rent</label>
-          <input type="number" name="min_rent" placeholder="₹0" value={filters.min_rent} onChange={handleFilterChange} />
+          <input type="number" name="minRent" placeholder="₹0" value={filters.minRent} onChange={handleFilterChange} />
         </div>
         <div style={{ flex: '1 1 120px' }}>
           <label>Max Rent</label>
-          <input type="number" name="max_rent" placeholder="Any" value={filters.max_rent} onChange={handleFilterChange} />
+          <input type="number" name="maxRent" placeholder="Any" value={filters.maxRent} onChange={handleFilterChange} />
         </div>
         <div>
           <button type="submit">Search</button>
@@ -93,7 +93,7 @@ function PropertyList() {
               <h3>{property.title}</h3>
               <p className="text-muted">{property.area}, {property.city}</p>
               <p className="price">₹{property.rent}/month</p>
-              <span className="badge badge-muted">{property.property_type.replace('_', ' ')}</span>
+              <span className="badge badge-muted">{property.propertyType.replace('_', ' ')}</span>
             </div>
           </Link>
         ))}

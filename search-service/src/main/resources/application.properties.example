@@ -1,0 +1,13 @@
+# Server port (different from Node backend's 5000)
+server.port=8081
+
+# PostgreSQL connection - same DB as your Node backend
+spring.datasource.url=jdbc:postgresql://localhost:5432/hydnest
+spring.datasource.username=postgres
+spring.datasource.password=your_password_here
+
+# JPA settings - read-only usage, don't let Hibernate alter existing tables
+spring.jpa.hibernate.ddl-auto=none
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.open-in-view=false
