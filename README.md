@@ -1,6 +1,6 @@
 # 🏠 HydNest
 
-A full-stack rental platform for finding PGs, hostels, flats, and shared rooms in Hyderabad. Built as a real-world project to demonstrate end-to-end full-stack development — from database design to a responsive, role-based UI.
+A full-stack rental platform for finding PGs, hostels, flats, and shared rooms in Hyderabad. Built as a real-world project to demonstrate end-to-end full-stack development — from database design to a responsive, role-based UI, backed by a polyglot microservices architecture (Node.js + Java Spring Boot).
 
 ## 🔗 Live Demo
 *(Add your deployed link here once hosted)*
@@ -29,8 +29,9 @@ A full-stack rental platform for finding PGs, hostels, flats, and shared rooms i
 ## 🛠️ Tech Stack
 
 **Frontend:** React.js, React Router, Axios, Context API, Vite
-**Backend:** Node.js, Express.js
-**Database:** PostgreSQL
+**Core Backend:** Node.js, Express.js — handles auth, property CRUD, image uploads, saved properties, enquiries
+**Search Microservice:** Java, Spring Boot 4, Spring Data JPA — handles property search & filtering
+**Database:** PostgreSQL (shared by both backend services)
 **Auth:** JWT, bcrypt.js
 **File Uploads:** Multer
 **Styling:** Plain CSS with a shared design system (CSS custom properties)
@@ -39,19 +40,24 @@ A full-stack rental platform for finding PGs, hostels, flats, and shared rooms i
 
 ```
 hydnest/
-├── backend/
-│   ├── config/          # DB connection, table creation, multer config
-│   ├── controllers/     # Route logic (auth, properties, users, enquiries)
-│   ├── middleware/      # JWT auth middleware
-│   ├── routes/          # Express route definitions
-│   ├── uploads/         # Uploaded property images
+├── backend/              # Node.js/Express - auth, CRUD, uploads, enquiries
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── routes/
+│   ├── uploads/
 │   └── server.js
+├── search-service/       # Java Spring Boot - property search microservice
+│   └── src/main/java/com/hydnest/searchservice/
+│       ├── controller/   # REST endpoint for search
+│       ├── model/        # Property entity (maps to shared DB)
+│       └── repository/   # JPA query logic with dynamic filters
 ├── frontend/
 │   └── src/
-│       ├── components/  # Reusable UI (Navbar)
-│       ├── context/     # AuthContext for global auth state
-│       ├── pages/       # Route-level pages
-│       ├── services/    # Axios API instance
+│       ├── components/
+│       ├── context/
+│       ├── pages/
+│       ├── services/     # Axios instances for both backend services
 │       └── App.jsx
 └── README.md
 ```
@@ -80,16 +86,27 @@ hydnest/
 | GET | `/api/users/saved-properties` | Get saved properties | Tenant |
 | POST | `/api/enquiries/:propertyId` | Send an enquiry | Tenant |
 | GET | `/api/enquiries/received` | View received enquiries | Owner |
+| GET | `/api/search/properties` | Search/filter properties (Java service) | Public |
+
+> Note: Property search/filtering is served by the Java Spring Boot microservice (port 8081), while all other endpoints are served by the Node backend (port 5000). Both connect to the same PostgreSQL database.
 
 ## 🚀 Running Locally
 
-**Backend:**
+**Backend (Node):**
 ```bash
 cd backend
 npm install
 # add a .env file with DB credentials and JWT_SECRET
 node config/createTables.js   # creates tables
 nodemon server.js
+```
+
+**Search Microservice (Java):**
+```bash
+cd search-service
+cp src/main/resources/application.properties.example src/main/resources/application.properties
+# edit application.properties with your DB credentials, or set DB_PASSWORD as an env var
+./mvnw spring-boot:run
 ```
 
 **Frontend:**
@@ -99,12 +116,12 @@ npm install
 npm run dev
 ```
 
-Backend runs on `http://localhost:5000`, frontend on `http://localhost:5173`.
+Node backend runs on `http://localhost:5000`, Java search service on `http://localhost:8081`, frontend on `http://localhost:5173`.
 
 ## 🔮 Planned Enhancements
-- Java Spring Boot microservice for advanced property search
 - Deployment (Vercel + Render/Railway)
 - Pagination and input validation with express-validator
+- Expand Java microservice with full-text search / Elasticsearch integration
 
 ## 👤 Author
 
